@@ -1,4 +1,4 @@
-const express = require('express');
+ const express = require('express');
 const webpush = require('web-push');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -12,39 +12,41 @@ app.use(bodyParser.json());
 // We will store our client files in ./client directory.
 app.use(express.static(path.join(__dirname, "client")))
 
-const publicVapidKey = "BFai2Ubydtsw0u5cbCiFXxIA5AORnFmA7cE-qa5RNKfcRtK8ZfNFyEH-lLee0pTO_8WCqPC5hvMOs4LAo5fOQLc";
+const publicVapidKey = "BGE0hEoY6OLW48c_oQKB9quw2LEStTkR5J33_0FbcSFbYgDTt5DRb0CADfqVtF_Kz1WIOg3xNus2TZYl3MDMZ4M";
 
-const privateVapidKey = "lxAxUaY5_5wOkKSCxi89j2BgzGPfBcWXkJYoVl5Qov4";
+const privateVapidKey = "96f3DK1BSFbE2VmPSw_jBzjUS0jNcKQmXWfzvwjFC-E";
 
 // Setup the public and private VAPID keys to web-push library.
 webpush.setVapidDetails("mailto:test@test.com", publicVapidKey, privateVapidKey);
 
 // Create route for allow client to subscribe to push notification.
-// app.post('/subscribe', (req, res) => {
-//     const subscription = req.body;
-//     console.log(subscription);
-//     res.status(201).json({});
-app.post("/subscribe", (req, res) => {
-    try {
-      const { subscription} = req?.body;
-      console.log("kkk",{subscription});
-      if (subscription.endpoint) {
-        //const payload = JSON.stringify({ title: "Hello World", body: "This is your first push notification" });
-        const payload ={ title :'Icon Notification',Option:{iii:"uuuu"}};
-        console.log("nnnnn", payload);
-        webpush .sendNotification(subscription, JSON.stringify(payload))
-          .catch(console.log);
-        res.send("Notification sent successfuly");
-      } else res.status(500).json({ error: "No subscription end point" });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-  //  const payload = JSON.stringify({ title: "Hello World", body: "This is your first push notification" });
+app.post('/subscribe', (req, res) => {
+    const subscription = req.body;
+    console.log("ggggggggg",subscription);
+    res.status(201).json({});
+    //const payload = JSON.stringify({ title: "Hello World", body: "This is your first push notification" });
+    //console.log("kkkkk,",payload);
 
-  // webpush.sendNotification(subscription, payload).catch(console.log);
-//})
+    //webpush.sendNotification(subscription, payload).catch(console.log);
+})
+
+app.post("/push", (req, res) => {
+      try {
+        const {subscription} = req?.body;
+        console.log("kkk",{subscription});
+        if (subscription.endpoint) {
+          //const payload = JSON.stringify({ title: "Hello World", body: "This is your first push notification" });
+           const payload ={title :"Icon Notification"};
+          console.log("nnnnn", payload);
+          webpush .sendNotification(subscription, JSON.stringify({payload}))
+            .catch(console.log);
+          res.send("Notification sent successfuly");
+        } else res.status(500).json({ error: "No subscription end point" });
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+      }
+    });
 
 const PORT = 5001;
 
