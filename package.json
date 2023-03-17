@@ -19,8 +19,11 @@
   "homepage": "https://github.com/depashikha-hutech/web-push-notification#readme",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "nodemon": "^2.0.21",
+    "pg": "^8.10.0",
+    "sequelize": "^6.29.3",
     "web-push": "^3.5.0"
   }
 }
